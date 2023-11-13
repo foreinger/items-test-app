@@ -1,0 +1,53 @@
+.item-form {
+  width: 100%;
+  display: flex;
+  gap: 24px;
+  padding: 16px 0;
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  button {
+    min-height: 56px;
+  }
+}
+
+
+.items-table {
+  width: 100%;
+
+  .mat-column-id {
+    flex: 0 0 5% !important;
+    width: 5% !important;
+    overflow-wrap: break-word;
+  }
+
+  .mat-column-actions {
+    flex: 0 0 20% !important;
+    width: 20% !important;
+
+    .buttons-wrapper {
+      width: 100%;
+      display: flex;
+      gap: 12px;
+    }
+  }
+
+  .mat-elevation-z16 {
+    transition: transform 300ms, box-shadow 300ms;
+    transform: translate3d(5px, -5px, 10px);
+  }
+
+  .mat-cell {
+    text-align: center;
+    padding: 16px;
+  }
+}
+
+
+@media screen and (max-width: 430px) {
+  .item-form, .items-table {
+    padding: 16px;
+  }
+}

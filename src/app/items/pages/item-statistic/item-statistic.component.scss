@@ -1,0 +1,28 @@
+.statistic-table {
+  width: 100%;
+  margin-top: 16px;
+
+  .mat-column-id {
+    flex: 0 0 5% !important;
+    width: 5% !important;
+    overflow-wrap: break-word;
+  }
+
+  .mat-column-actions {
+
+
+    flex: 0 0 20% !important;
+    width: 20% !important;
+
+    .buttons-wrapper {
+      width: 100%;
+      display: flex;
+      gap: 12px;
+    }
+  }
+
+  .mat-cell {
+    text-align: center;
+    padding: 16px;
+  }
+}
