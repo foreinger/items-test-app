@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {ItemsApiService} from "./items-api.service";
 import {catchError, filter, Observable, of, switchMap} from "rxjs";
-import {Item, ItemForm, Type, TypeStatistic} from "../interfaces/item.interface";
+import {Item, ItemForm, TypeStatistic} from "../types/item.types";
 import {MatDialog} from "@angular/material/dialog";
 import {ConfirmDialogComponent} from "../components/confirm-dialog/confirm-dialog.component";
-import {Pagination, PaginationParams} from "../../core/interfaces/pagination.interfaces";
+import {Pagination, PaginationParams} from "../../core/types/pagination.types";
 
 @Injectable({
   providedIn: 'root'

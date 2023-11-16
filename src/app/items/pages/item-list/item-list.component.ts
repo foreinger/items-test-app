@@ -5,10 +5,10 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatTableModule} from "@angular/material/table";
 import {NgForOf, NgIf} from "@angular/common";
 import {MatPaginator, MatPaginatorModule} from "@angular/material/paginator";
-import {Item, ItemForm} from "../../interfaces/item.interface";
+import {Item, ItemForm} from "../../types/item.types";
 import {FormBuilder, FormGroupDirective, ReactiveFormsModule, Validators} from "@angular/forms";
 import {ItemsService} from "../../services/items.service";
-import {Pagination, PaginationParams} from "../../../core/interfaces/pagination.interfaces";
+import {Pagination, PaginationParams} from "../../../core/types/pagination.types";
 import {PaginationParamsDto} from "../../../core/models/pagination.models";
 
 @Component({

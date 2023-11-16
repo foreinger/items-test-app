@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Item, ItemForm, TypeStatistic} from "../interfaces/item.interface";
+import {Item, ItemForm, TypeStatistic} from "../types/item.types";
 import {environment} from "../../../environments/environment";
 import {Observable} from "rxjs";
-import {Pagination, PaginationParams} from "../../core/interfaces/pagination.interfaces";
+import {Pagination, PaginationParams} from "../../core/types/pagination.types";
 
 @Injectable({
   providedIn: 'root'

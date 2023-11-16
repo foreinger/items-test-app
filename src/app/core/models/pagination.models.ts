@@ -1,4 +1,4 @@
-import {PaginationParams} from "../interfaces/pagination.interfaces";
+import {PaginationParams} from "../types/pagination.types";
 
 export class PaginationParamsDto {
   public pageIndex: number;

@@ -1,5 +1,5 @@
 import {FormModel} from "ngx-mf";
-import {BaseEntity} from "../../core/interfaces/base.interfaces";
+import {BaseEntity} from "../../core/types/base.types";
 
 export type Item = {
   name: string;
