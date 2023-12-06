@@ -1,0 +1,23 @@
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+
+.content-wrapper {
+  max-width: 940px;
+  margin: 0 auto;
+}
+
+body:not(.is-ios) .custom-scroll::-webkit-scrollbar {
+  //display: none;
+}

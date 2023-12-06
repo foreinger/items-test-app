@@ -6,8 +6,25 @@
     "item-list-app": {
       "projectType": "application",
       "schematics": {
+        "@schematics/angular:pipe": {
+          "standalone": true,
+          "skipTests": true,
+          "skipImport": true
+        },
         "@schematics/angular:component": {
-          "style": "scss"
+          "style": "scss",
+          "standalone": true,
+          "skipTests": true,
+          "skipImport": true
+        },
+        "@schematics/angular:directive": {
+          "standalone": true,
+          "skipTests": true,
+          "skipImport": true,
+          "prefix": ""
+        },
+        "@schematics/angular:service": {
+          "skipTests": true
         }
       },
       "root": "",

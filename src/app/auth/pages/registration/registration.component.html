@@ -5,22 +5,22 @@
   <mat-card>
     <mat-card-title>Registration form</mat-card-title>
     <mat-card-content>
-      <form [formGroup]="form" (ngSubmit)="submit()" class="auth-form">
+      <form *ngIf="form$ | async as form" [ngrxFormState]="form" (ngSubmit)="submit()" class="auth-form">
         <mat-form-field>
           <mat-label>Username</mat-label>
-          <input matInput placeholder="Username" type="username" formControlName="username">
+          <input matInput placeholder="Username" type="username" [ngrxFormControlState]="form.controls.username">
         </mat-form-field>
         <mat-form-field>
           <mat-label>Password</mat-label>
-          <input matInput placeholder="Password" type="password" formControlName="password">
+          <input matInput placeholder="Password" type="password" [ngrxFormControlState]="form.controls.password">
         </mat-form-field>
         <mat-form-field>
           <mat-label>Confirm Password</mat-label>
-          <input matInput placeholder="Password" type="password" formControlName="passwordConfirm">
+          <input matInput placeholder="Password" type="password" [ngrxFormControlState]="form.controls.passwordConfirm">
         </mat-form-field>
 
         <div class="buttons">
-          <button [disabled]="form.invalid" type="submit" mat-raised-button color="primary">Register</button>
+          <button [disabled]="form.isInvalid" type="submit" mat-raised-button color="primary">Register</button>
           <button routerLink="/auth/login" type="button" mat-button color="primary">To Login</button>
         </div>
       </form>
