@@ -1,0 +1,9 @@
+mat-toolbar {
+  justify-content: space-between;
+
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+}

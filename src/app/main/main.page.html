@@ -1,0 +1,11 @@
+<mat-toolbar color="primary">
+  <span>Items app</span>
+  <div class="user-info">
+    <button routerLink="/main/chat" mat-raised-button color="primary">Chat</button>
+    <button routerLink="/main/users" mat-raised-button color="primary">Users</button>
+    <button routerLink="/main/items" mat-raised-button color="primary">Items</button>
+    <p *ngIf="me$ | async as me">User: {{me.username}}</p>
+    <button (click)="logout()" mat-stroked-button color="warn">Logout</button>
+  </div>
+</mat-toolbar>
+<router-outlet></router-outlet>

@@ -4,12 +4,15 @@ import {MatCardModule} from "@angular/material/card";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatToolbarModule} from "@angular/material/toolbar";
-import {NgIf} from "@angular/common";
-import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
-import {Router, RouterLink} from "@angular/router";
-import {RegistrationForm} from "../../types/auth-dto.types";
-import {ValidatorsService} from "../../../core/services/validators.service";
-import {AuthService} from "../../services/auth.service";
+import {AsyncPipe, NgIf} from "@angular/common";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {RouterLink} from "@angular/router";
+import {Store} from "@ngrx/store";
+import {AuthFeature} from "../../store/auth.state";
+import {AppState} from "../../../app.state";
+import {REGISTRATION_ACTIONS} from "../../store/auth.actions";
+import {NgrxFormsModule} from "ngrx-forms";
+import {NgrxFormErrorStateMatcher} from "../../../core/material/error-state-matcher";
 
 @Component({
   selector: 'app-registration',
@@ -24,29 +27,23 @@ import {AuthService} from "../../services/auth.service";
     MatToolbarModule,
     NgIf,
     ReactiveFormsModule,
-    RouterLink
+    RouterLink,
+    AsyncPipe,
+    NgrxFormsModule,
+    FormsModule,
+    NgrxFormErrorStateMatcher,
   ]
 })
 export default class RegistrationComponent {
 
-  public form: RegistrationForm = this.fb.group<RegistrationForm['controls']>({
-    username: this.fb.control('', [Validators.required]),
-    password: this.fb.control('', [Validators.required]),
-    passwordConfirm: this.fb.control('', [Validators.required]),
-  }, {validators: [ValidatorsService.matchPassword()]});
+  public form$ = this.store.select(AuthFeature.selectRegistrationForm);
 
   constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router,
+    private store: Store<AppState>,
   ) {
   }
 
-  submit() {
-    if (this.form.valid) {
-      this.authService.register(this.form.getRawValue())
-        .subscribe((res) => this.router.navigateByUrl('/items'))
-    }
+  public submit() {
+    this.store.dispatch(REGISTRATION_ACTIONS.submit())
   }
-
 }

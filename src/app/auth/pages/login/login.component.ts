@@ -1,13 +1,17 @@
 import {Component} from '@angular/core';
 import {MatCardModule} from "@angular/material/card";
-import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
-import {NgIf} from "@angular/common";
+import {CommonModule, NgIf} from "@angular/common";
 import {MatButtonModule} from "@angular/material/button";
 import {MatToolbarModule} from "@angular/material/toolbar";
-import {Router, RouterLink} from "@angular/router";
-import {LoginForm} from "../../types/auth-dto.types";
-import {AuthService} from "../../services/auth.service";
+import {RouterLink} from "@angular/router";
+import {AuthFeature} from "../../store/auth.state";
+import {Store} from "@ngrx/store";
+import {AppState} from "../../../app.state";
+import {NgrxFormsModule} from "ngrx-forms";
+import {LOGIN_ACTIONS} from "../../store/auth.actions";
+import {NgrxFormErrorStateMatcher} from "../../../core/material/error-state-matcher";
 
 @Component({
   selector: 'app-login',
@@ -15,35 +19,29 @@ import {AuthService} from "../../services/auth.service";
   styleUrls: ['./login.component.scss', '../../auth.page.scss'],
   standalone: true,
   imports: [
+    CommonModule,
     MatCardModule,
     ReactiveFormsModule,
     MatInputModule,
     NgIf,
     MatButtonModule,
     MatToolbarModule,
-    RouterLink
+    RouterLink,
+    NgrxFormsModule,
+    FormsModule,
+    NgrxFormErrorStateMatcher,
   ]
 })
 export default class LoginComponent {
 
-
-  public form: LoginForm = this.fb.group<LoginForm['controls']>({
-    username: this.fb.control('', [Validators.required]),
-    password: this.fb.control('', [Validators.required]),
-  });
+  public form$ = this.store.select(AuthFeature.selectLoginForm);
 
   constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router,
+    private store: Store<AppState>,
   ) {
   }
 
-  submit() {
-    if (this.form.valid) {
-      this.authService.login(this.form.getRawValue())
-        .subscribe((res) => this.router.navigateByUrl('/items'))
-    }
+  public submit() {
+    this.store.dispatch(LOGIN_ACTIONS.submit())
   }
-
 }

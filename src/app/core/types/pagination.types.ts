@@ -4,6 +4,6 @@ export type PaginationParams = {
 }
 
 export type Pagination<T> = {
-  data: T;
+  data: T[];
   total: number;
 } & PaginationParams

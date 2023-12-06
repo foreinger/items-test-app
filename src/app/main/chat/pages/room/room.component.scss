@@ -1,0 +1,151 @@
+:host {
+  height: 100%;
+}
+
+.room-wrapper {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  .messages {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding: 0;
+    gap: 8px;
+    position: relative;
+
+    .message-wrapper {
+      display: flex;
+      flex-direction: column;
+
+      .message-bubble {
+        padding: 8px 10px;
+        border-radius: 5px;
+        display: inline-block;
+        word-break: break-word;
+        white-space: pre-line;
+        width: fit-content;
+        max-width: 70%;
+      }
+
+      .message-meta {
+        font-size: 12px;
+        margin: 5px;
+        color: #888;
+      }
+
+
+      &.sent {
+        .message-bubble {
+          background-color: #3f51b5;
+          color: white;
+          align-self: flex-end;
+        }
+        .message-meta {
+          align-self: flex-end;
+        }
+      }
+
+
+      &.received {
+        .message-bubble {
+          background-color: #e0e0e0;
+        }
+      }
+
+      &:first-child {
+        margin-top: auto;
+      }
+
+      &:last-child {
+        padding-bottom: 8px;
+      }
+    }
+  }
+
+  .message-form {
+    display: flex;
+    margin-top: auto;
+    padding: 0;
+    position: relative;
+    z-index: 100;
+
+
+    form {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      position: relative;
+
+      textarea {
+        min-height: 100%;
+        width: 90%;
+        border-radius: 2px;
+        resize: none;
+        max-height: 30vh; /* Set a minimum height for the textarea */
+        font-size: 16px; /* Set font size as desired */
+
+        line-height: 100%;
+      }
+
+      textarea::placeholder {
+        margin: 10px
+      }
+
+      button {
+        min-height: 50px;
+        width: 10%;
+      }
+    }
+  }
+
+  .scroll-to-latest {
+    width: 40px;
+    min-width: 40px;
+    max-width: 40px;
+    height: 40px;
+    min-height: 40px;
+    max-height: 40px;
+    padding: 0;
+
+    position: absolute;
+    bottom: 85px;
+    left: 30px;
+    z-index: 10;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background: #3f51b5;
+    color: white;
+    border: none;
+    opacity: 0.8;
+    transition: transform 300ms ease-out 100ms;
+    transform: translateY(0);
+
+    &.hidden {
+      transform: translateY(65px);
+    }
+
+    mat-icon {
+      margin: 0;
+      display: flex;
+      width: 20px;
+      height: 20px;
+      font-size: 35px;
+      padding: 0;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
+

@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {LoginDto, RegistrationDto} from "../types/auth-dto.types";
 import {Observable} from "rxjs";
-import {AuthResponse} from "../types/auth-api.types";
+import {AuthResponse} from "../types/api.types";
 import {environment} from "../../../environments/environment";
+import {LoginForm, RegistrationForm} from "../types/forms.types";
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +15,11 @@ export class AuthApiService {
   ) {
   }
 
-  public login(payload: LoginDto): Observable<AuthResponse> {
+  public login(payload: LoginForm): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${environment.apiUrl}/auth/login`, payload);
   }
 
-  public register(payload: RegistrationDto): Observable<AuthResponse> {
+  public register(payload: RegistrationForm): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${environment.apiUrl}/auth/register`, payload);
   }
 }

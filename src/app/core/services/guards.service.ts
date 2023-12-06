@@ -24,4 +24,9 @@ export class GuardsService {
 
     return Boolean(token);
   }
+
+  public async loggedInGuard(): Promise<boolean> {
+    const token = this.storage.getRecord<string>(StorageKeys.authToken);
+    return !Boolean(token);
+  }
 }
