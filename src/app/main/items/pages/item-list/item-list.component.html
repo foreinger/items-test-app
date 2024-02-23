@@ -1,37 +1,61 @@
 <ng-container *ngrxLet="form$ as form">
   <form *ngIf="form" [ngrxFormState]="form" (ngSubmit)="submitItemForm()" class="item-form">
-    <mat-form-field>
+    <mat-form-field *ngIf="form.controls.name as nameControl">
       <mat-label>Item name</mat-label>
-      <input matInput placeholder="Name" [ngrxFormControlState]="form.controls.name">
+      <input matInput placeholder="Name" [ngrxFormControlState]="nameControl">
+      <mat-error *ngIf="nameControl.errors.required">Field is required</mat-error>
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field *ngIf="form.controls.type as typeControl">
       <mat-label>Item type</mat-label>
-      <input matInput placeholder="Type" [ngrxFormControlState]="form.controls.type">
+      <input matInput placeholder="Type" (input)="getExistingTypes()" [ngrxFormControlState]="form.controls.type" [matAutocomplete]="type">
+      <mat-autocomplete #type="matAutocomplete" autoActiveFirstOption>
+        @for (option of typesAutocomplete$ | async; track option) {
+          <mat-option [value]="option.name">{{ option.name }}</mat-option>
+        }
+      </mat-autocomplete>
+      <mat-error *ngIf="typeControl.errors.required">Field is required</mat-error>
     </mat-form-field>
 
-    <button type="submit" [disabled]="form.isInvalid" mat-raised-button color="primary">{{form.value.id ? 'Update' : 'Add'}}</button>
+    <button type="submit" [disabled]="form.isInvalid" mat-raised-button color="primary">{{ form.value.id ? 'Update' : 'Add' }}</button>
     <button type="reset" (click)="resetItemForm()" mat-stroked-button color="warn">Clear</button>
   </form>
-  <ng-container *ngIf="page$ | async as page">
-    <table mat-table [dataSource]="page.data" class="mat-elevation-z18 items-table">
-
+  <ng-container *ngrxLet="{
+    page: page$,
+    me: me$
+  } as data">
+    <table mat-table *ngIf="data.page?.data" [dataSource]="data.page?.data ?? []" class="mat-elevation-z18 items-table">
       <!-- ID Column -->
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef>ID</th>
-        <td mat-cell *matCellDef="let element">{{element.id}}</td>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
       </ng-container>
 
       <!-- Name Column -->
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef>Name</th>
-        <td mat-cell *matCellDef="let element">{{element.name}}</td>
+        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
       </ng-container>
 
       <!-- Type Column -->
       <ng-container matColumnDef="type">
         <th mat-header-cell *matHeaderCellDef>Type</th>
-        <td mat-cell *matCellDef="let element">{{element.type?.name}}</td>
+        <td mat-cell *matCellDef="let element">{{ element.type?.name }}</td>
+      </ng-container>
+
+      <!-- Created By Column -->
+      <ng-container matColumnDef="creator">
+        <th mat-header-cell *matHeaderCellDef>Created By</th>
+        <td mat-cell *matCellDef="let element">
+          <div class="user-info">
+            <span>{{ element.createdBy?.username }}</span>
+            @if (element.createdBy.id !== data.me?.id) {
+              <button mat-icon-button (click)="chatToUser(element.createdBy.id)" class="chat-button" >
+                <mat-icon>chat_add_on</mat-icon>
+              </button>
+            }
+          </div>
+        </td>
       </ng-container>
 
       <!-- Actions Column -->
@@ -54,10 +78,10 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;" [class.mat-elevation-z16]="row?.id === form.value.id"></tr>
     </table>
     <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                   [length]="page.total"
-                   [pageSize]="page.pageSize"
-                   [pageIndex]="page.pageIndex"
-                   (page)="loadItems($event)"
+                   [length]="data.page?.total"
+                   [pageSize]="data.page?.pageSize"
+                   [pageIndex]="data.page?.pageIndex"
+                   (page)="paginationChange($event)"
                    showFirstLastButtons
                    aria-label="Select page of periodic elements">
     </mat-paginator>

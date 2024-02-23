@@ -1,0 +1,13 @@
+:host {
+  height: 100%;
+}
+
+.empty-list {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 16px;
+}

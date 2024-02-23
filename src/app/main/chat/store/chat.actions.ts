@@ -5,7 +5,7 @@ import {Message, Room} from "../types/chats.types";
 export const CHAT_ACTIONS = createActionGroup({
   source: 'Chat Feature',
   events: {
-    initRoom: props<{ userId: number }>(),
+    initRoom: props<{ userId: string | null }>(),
     getRooms: emptyProps(),
     setRooms: props<{ rooms: Room[] }>(),
     updateRooms: props<{ room: Room }>(),
@@ -14,10 +14,10 @@ export const CHAT_ACTIONS = createActionGroup({
     initChatListener: emptyProps(),
     closeChatListener: emptyProps(),
 
-    enterTheRoom: props<{ roomId: number }>(),
-    leaveTheRoom: props<{ roomId: number }>(),
+    enterTheRoom: props<{ roomId: string | null }>(),
+    leaveTheRoom: props<{ roomId: string | null }>(),
 
-    setMessageForm: props<{ roomId: number }>(),
+    setMessageForm: props<{ roomId: string | null }>(),
     sendMessage: emptyProps(),
     messageReceived: props<{ message: Message }>(),
 

@@ -9,6 +9,11 @@ export class AppRoutingStrategy extends BaseRouteReuseStrategy {
     if (!future.routeConfig?.path || !curr.routeConfig?.path) {
       return super.shouldReuseRoute(future, curr);
     }
-    return !this.routesToNotReuse.includes(future.routeConfig?.path);
+
+    if (this.routesToNotReuse.includes(future.routeConfig?.path)) {
+      return false;
+    }
+
+    return curr.routeConfig?.path == future.routeConfig?.path;
   }
 }

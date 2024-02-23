@@ -11,8 +11,10 @@ import {Store} from "@ngrx/store";
 import {AuthFeature} from "../../store/auth.state";
 import {AppState} from "../../../app.state";
 import {REGISTRATION_ACTIONS} from "../../store/auth.actions";
-import {NgrxFormsModule} from "ngrx-forms";
+import {FormGroupState, NgrxFormsModule} from "ngrx-forms";
 import {NgrxFormErrorStateMatcher} from "../../../core/material/error-state-matcher";
+import {Observable} from "rxjs";
+import {RegistrationForm} from "../../types/forms.types";
 
 @Component({
   selector: 'app-registration',
@@ -36,7 +38,7 @@ import {NgrxFormErrorStateMatcher} from "../../../core/material/error-state-matc
 })
 export default class RegistrationComponent {
 
-  public form$ = this.store.select(AuthFeature.selectRegistrationForm);
+  public form$: Observable<FormGroupState<RegistrationForm>> = this.store.select(AuthFeature.selectRegistrationForm);
 
   constructor(
     private store: Store<AppState>,

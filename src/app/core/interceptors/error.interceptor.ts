@@ -13,9 +13,9 @@ export function ErrorHandlerInterceptor(request: HttpRequest<any>, next: HttpHan
       catchError((err, caught) => {
           if (err instanceof HttpErrorResponse) {
             if (err.status === 401) {
-              console.log(err.status);
-              storage.clearStorage();
-              router.navigateByUrl('/auth/login');
+              // console.log(err.status);
+              // storage.clearStorage();
+              // router.navigateByUrl('/auth/login');
             }
           }
           return throwError(() => err)

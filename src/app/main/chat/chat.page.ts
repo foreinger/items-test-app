@@ -52,8 +52,8 @@ export default class ChatPage implements OnInit, OnDestroy {
   ) {
   }
 
-  public get roomId(): number | undefined {
-    return Number(this.route.firstChild?.snapshot.paramMap.get('id'));
+  public get roomId(): string | null {
+    return this.route.firstChild?.snapshot.paramMap.get('id') ?? null;
   }
 
   public ngOnInit(): void {

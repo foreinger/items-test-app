@@ -8,6 +8,10 @@ export const CHAT_ROUTES: Routes = [{
     {
       path: ':id',
       loadComponent: () => import('./pages/room/room.component'),
+    },
+    {
+      path: '',
+      loadComponent: () => import('./pages/empty-chat/empty-chat.component'),
     }
   ]
 }]

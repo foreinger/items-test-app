@@ -1,18 +1,19 @@
-import {BaseProps} from "../../../core/types/base.types";
+import { BaseProps } from '../../../core/types/base.types';
+import { User } from '../../users/types/user.types';
 
 export type Item = {
   name: string;
-  type: Type;
-} & BaseProps
+  type: ItemType;
+  createdBy: User;
+} & BaseProps;
 
-
-export type Type = {
+export type ItemType = {
   name: string;
-} & BaseProps
+} & BaseProps;
 
 export type TypeStatistic = {
-  itemCount: number;
-} & Type
+  itemsCount: number;
+} & ItemType;
 
 export type ItemForm = {
   id?: number;

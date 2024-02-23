@@ -1,0 +1,12 @@
+<ng-container *ngrxLet="rooms$ as rooms">
+  @if (rooms?.length) {
+    <div class="empty-list">
+      Select a chat to start messaging
+    </div>
+  } @else {
+    <div class="empty-list">
+      Start chat with somebody
+      <button routerLink="/main/users" mat-raised-button color="primary">Users</button>
+    </div>
+  }
+</ng-container>

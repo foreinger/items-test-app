@@ -32,7 +32,12 @@ const reducer = createReducer(
     (state, {room}) => {
       // Sort in descending order (newest first)
       const updateRoom = (roomData: Room) => roomData.id === room.id ? room : roomData;
-      const sortByUpdatedAt = (a: Room, b: Room) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
+      const sortByUpdatedAt = (a: Room, b: Room) => {
+        console.log(a.updated_at)
+        console.log(b.updated_at)
+        return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
+      };
+
 
       return {
         ...state,
@@ -70,9 +75,9 @@ const chatFormsValidators = (state: ChatState) => ({
 export const ChatFeature = createFeature({
   name: 'Chat Feature', reducer,
   extraSelectors: (chatFeature) => ({
-    selectRoomById: (roomId: number) => createSelector(
+    selectRoomById: (roomId: string | null) => createSelector(
       chatFeature.selectRooms,
-      (rooms) => rooms?.find(room => room?.id === roomId) ?? null
+      (rooms: Room[] | null) => rooms?.find(room => room?.id === roomId) ?? null
     ),
   }),
 })

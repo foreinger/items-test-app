@@ -8,63 +8,80 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+
 
   .messages {
     display: flex;
-    flex-direction: column;
     height: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
-    padding: 0;
+    padding: 32px 0 16px 0;
     gap: 8px;
     position: relative;
+    flex-direction: column;
 
-    .message-wrapper {
+    .date-wrapper {
+      position: relative;
       display: flex;
       flex-direction: column;
+      margin-top: auto;
 
-      .message-bubble {
-        padding: 8px 10px;
-        border-radius: 5px;
-        display: inline-block;
-        word-break: break-word;
-        white-space: pre-line;
-        width: fit-content;
-        max-width: 70%;
+      .date-label {
+        position: sticky;
+        top: 0;
+        margin: auto;
+        z-index: 100;
       }
 
-      .message-meta {
-        font-size: 12px;
-        margin: 5px;
-        color: #888;
-      }
+      .message-wrapper {
+        display: flex;
+        flex-direction: column;
+        contain: layout;
 
-
-      &.sent {
         .message-bubble {
-          background-color: #3f51b5;
-          color: white;
-          align-self: flex-end;
+          position: relative;
+          padding: 8px 10px;
+          border-radius: 5px;
+          display: inline-block;
+          word-break: break-word;
+          white-space: pre-line;
+          width: fit-content;
+          max-width: 70%;
+
+          z-index: 100;
+          max-height: 100%;
         }
+
+
         .message-meta {
-          align-self: flex-end;
+          font-size: 12px;
+          margin: 5px;
+          color: #888;
         }
-      }
 
 
-      &.received {
-        .message-bubble {
-          background-color: #e0e0e0;
+        &.sent {
+          .message-bubble {
+            background-color: #3f51b5;
+            color: white;
+            align-self: flex-end;
+          }
+
+          .message-meta {
+            align-self: flex-end;
+          }
         }
-      }
 
-      &:first-child {
-        margin-top: auto;
-      }
 
-      &:last-child {
-        padding-bottom: 8px;
+        &.received {
+          .message-bubble {
+            background-color: #e0e0e0;
+          }
+        }
+
+        &:first-child {
+          margin-top: auto;
+        }
       }
     }
   }
@@ -84,16 +101,29 @@
       align-items: end;
       gap: 16px;
       position: relative;
+      padding-top: 16px;
 
-      textarea {
-        min-height: 100%;
+      .textarea-wrapper {
+        display: flex;
         width: 90%;
-        border-radius: 2px;
-        resize: none;
-        max-height: 30vh; /* Set a minimum height for the textarea */
-        font-size: 16px; /* Set font size as desired */
+        border-radius: 8px;
+        box-sizing: border-box;
+        box-shadow: 0 0 10px 0 rgba(146, 146, 146, 0.3);
+        border-color: rgba(146, 146, 146, 0.58);
+        padding: 16px;
 
-        line-height: 100%;
+        position: relative;
+        z-index: 100;
+        background: white;
+
+        textarea {
+          width: 100%;
+          font-size: 16px;
+          line-height: 24px;
+          border: none;
+          outline: none;
+          overflow: scroll;
+        }
       }
 
       textarea::placeholder {
@@ -101,39 +131,33 @@
       }
 
       button {
-        min-height: 50px;
+        height: 100%;
         width: 10%;
+        max-height: 56px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px 0 rgba(146, 146, 146, 0.3);
       }
     }
   }
 
   .scroll-to-latest {
-    width: 40px;
-    min-width: 40px;
-    max-width: 40px;
-    height: 40px;
-    min-height: 40px;
-    max-height: 40px;
-    padding: 0;
+    width: 45px;
+    height: 45px;
 
     position: absolute;
-    bottom: 85px;
-    left: 30px;
-    z-index: 10;
+    top: 22px;
+    left: 11px;
+    z-index: 1;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
     background: #3f51b5;
     color: white;
-    border: none;
     opacity: 0.8;
-    transition: transform 300ms ease-out 100ms;
-    transform: translateY(0);
+    transition: transform 300ms ease-out 100ms, opacity 300ms ease-out 100ms;
+    transform: translateY(-75px);
 
     &.hidden {
-      transform: translateY(65px);
+      opacity: 0;
+      transform: translateY(0);
     }
 
     mat-icon {
@@ -147,5 +171,9 @@
       align-items: center;
     }
   }
+
 }
 
+* ::-webkit-scrollbar {
+  display: none;
+}

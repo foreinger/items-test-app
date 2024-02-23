@@ -6,17 +6,22 @@
     <mat-card-title>Registration form</mat-card-title>
     <mat-card-content>
       <form *ngIf="form$ | async as form" [ngrxFormState]="form" (ngSubmit)="submit()" class="auth-form">
-        <mat-form-field>
+        <mat-form-field *ngIf="form.controls.username as usernameCtrl">
           <mat-label>Username</mat-label>
-          <input matInput placeholder="Username" type="username" [ngrxFormControlState]="form.controls.username">
+          <input matInput placeholder="Username" type="username" [ngrxFormControlState]="usernameCtrl" [groupErrors]="form.errors">
+          <mat-error *ngIf="usernameCtrl.errors.required">Username required</mat-error>
+          <mat-error *ngIf="usernameCtrl.errors.userAlreadyExist">User already exist</mat-error>
+          <mat-error *ngIf="usernameCtrl.errors.isLowercase">Username should be in lowercase</mat-error>
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field *ngIf="form.controls.password as passwordCtrl">
           <mat-label>Password</mat-label>
-          <input matInput placeholder="Password" type="password" [ngrxFormControlState]="form.controls.password">
+          <input matInput placeholder="Password" type="password" [ngrxFormControlState]="passwordCtrl" [groupErrors]="form.errors">
+          <mat-error *ngIf="passwordCtrl.errors.required">Password required</mat-error>
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field *ngIf="form.controls.passwordConfirm as passwordConfirmCtrl">
           <mat-label>Confirm Password</mat-label>
-          <input matInput placeholder="Password" type="password" [ngrxFormControlState]="form.controls.passwordConfirm">
+          <input matInput placeholder="Password" type="password" [ngrxFormControlState]="passwordConfirmCtrl" [groupErrors]="form.errors">
+          <mat-error *ngIf="passwordConfirmCtrl.errors.noMatch">Password miss match</mat-error>
         </mat-form-field>
 
         <div class="buttons">

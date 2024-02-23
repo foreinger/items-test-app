@@ -1,21 +1,27 @@
 <div class="chat-container content-wrapper">
-  <!-- Chat rooms list -->
-  <mat-card *ngIf="me$ | async as me" class="chat-rooms-list">
-    <mat-list *ngIf="rooms$ | async as rooms">
-      <mat-list-item *ngFor="let room of rooms; first as first"
-                     [class.active]="roomId === room.id"
-                     [routerLink]=" room.id.toString()" [relativeTo]="route" replaceUrl="true">
-        <div mat-line class="room-name">{{ room.members | roomName: me.id  }}</div>
-        <div mat-line class="last-message">{{ room.lastMessage?.text ?? 'No message yet'}}</div>
-        <div mat-line class="last-message-date">{{ room.lastMessage?.updatedAt | date }}</div>
-      </mat-list-item>
-    </mat-list>
-  </mat-card>
+  @if (rooms$ | async; as rooms) {
+    <!-- Chat rooms list -->
+    <mat-card *ngIf="me$ | async as me" class="chat-rooms-list">
+      @if (rooms.length) {
+        <mat-list>
+          @for (room of rooms; track room) {
+            <mat-list-item
+              [class.active]="roomId === room.id"
+              [routerLink]=" room.id.toString()" [relativeTo]="route" replaceUrl="true">
+              <div mat-line class="room-name">{{ (room.members | roomName: me.id) ?? 'Deleted User' }}</div>
+              <div mat-line class="last-message">{{ room.lastMessage?.text ?? 'No message yet' }}</div>
+              <div mat-line class="last-message-date">{{ (room.lastMessage?.updated_at ?? room?.created_at) | date: 'dd MMM, HH:mm' }}</div>
+            </mat-list-item>
+          }
+        </mat-list>
+      } @else {
+        <div class="empty-list">No conversations</div>
+      }
+    </mat-card>
 
-  <!-- Chat room -->
-  <mat-card class="chat-room">
-    <router-outlet #routerOutlet></router-outlet>
-    <div *ngIf="!routerOutlet" class="stub">
-    </div>
-  </mat-card>
+    <!-- Chat room -->
+    <mat-card class="chat-room">
+      <router-outlet></router-outlet>
+    </mat-card>
+  }
 </div>

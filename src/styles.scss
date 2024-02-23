@@ -34,3 +34,5 @@ $test-app-theme: mat.define-light-theme((
 
 /* You can add global styles to this file, and also import other style files */
 @import "theme/common";
+@import "theme/variables";
+@import "theme/forms";

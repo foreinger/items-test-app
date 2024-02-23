@@ -1,11 +1,11 @@
-import {PaginationParams} from "../types/pagination.types";
+import { PaginationParams } from '../types/pagination.types';
 
 export class PaginationParamsDto {
   public pageIndex: number;
   public pageSize: number;
 
   constructor(data: PaginationParams) {
-    this.pageSize = data.pageSize;
-    this.pageIndex = data.pageIndex;
+    this.pageSize = data.pageSize ?? 5;
+    this.pageIndex = data.pageIndex ?? 0;
   }
 }

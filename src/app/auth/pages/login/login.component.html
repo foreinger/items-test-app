@@ -6,18 +6,25 @@
     <mat-card-title>Login form</mat-card-title>
     <mat-card-content>
       <form *ngIf="form$ | async as form" [ngrxFormState]="form" (ngSubmit)="submit()" class="auth-form">
-        <mat-form-field>
+        <mat-form-field *ngIf="form.controls.username as usernameCtrl">
           <mat-label>Username</mat-label>
-          <input matInput placeholder="Username" type="username" [ngrxFormControlState]="form.controls.username">
+          <input matInput placeholder="Username" type="username" [ngrxFormControlState]="usernameCtrl" [groupErrors]="form.errors">
+          <mat-error *ngIf="usernameCtrl.errors.required">Username required</mat-error>
+          <mat-error *ngIf="usernameCtrl.errors.isLowercase">Username should be in lowercase</mat-error>
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field *ngIf="form.controls.password as passwordCtrl">
           <mat-label>Password</mat-label>
-          <input matInput placeholder="Password" type="password" [ngrxFormControlState]="form.controls.password">
+          <input matInput placeholder="Password" type="password" [ngrxFormControlState]="passwordCtrl" [groupErrors]="form.errors" #password>
+          <button mat-icon-button matSuffix (click)="switchPasswordMode(password)" [attr.aria-label]="'Hide password'" type="button">
+            <mat-icon>{{ password.type === 'text' ? 'visibility' : 'visibility_off' }}</mat-icon>
+          </button>
+          <mat-error *ngIf="passwordCtrl.errors.required">Password required</mat-error>
+          <mat-error *ngIf="form.errors.invalidCredentials">Invalid user data</mat-error>
         </mat-form-field>
 
         <div class="buttons">
           <button type="submit" [disabled]="form.isInvalid" mat-raised-button color="primary">Login</button>
-          <button routerLink="/auth/registration" type="button" mat-button color="primary">To Registration</button>
+          <button [routerLink]="'/auth/registration'" type="button" mat-button color="primary">To Registration</button>
         </div>
       </form>
     </mat-card-content>

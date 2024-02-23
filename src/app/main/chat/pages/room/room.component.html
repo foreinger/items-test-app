@@ -1,34 +1,47 @@
 <div *ngrxLet="{
     room: room$,
-    messages: messages$,
+    messagesByDays: messagesByDays$,
     me: me$,
     form: form$
  } as data" class="room-wrapper">
-  <mat-card-content *ngIf="data.messages"
-                    scrollHandler [scrollButton]="scrollButton" [messagesRendered]="messagesRendered"
-                    class="messages custom-scroll"
-                    #chatContainerRef>
-    <div *ngFor="let message of data.messages"
-         [@.disabled]="!messagesRendered"
-         [class.sent]="message?.senderId === data.me?.id"
-         [class.received]="message?.senderId !== data.me?.id"
-         class="message-wrapper">
-      <span *ngIf="message"
-            @messageAnimation
-            class="message-bubble">
-        {{ message.text }}
-      </span>
-      <div class="message-meta">{{message.createdAt | date: 'HH:mm'}}</div>
-    </div>
+  @if (data.messagesByDays && data.form && data.room) {
+    <mat-card-content scrollHandler [scrollButton]="scrollButton" [animationsDisabled]="animationsDisabled"
+                      class="messages custom-scroll"
+                      #chatContainerRef>
+      @for (day of data.messagesByDays; track day; let lastDay = $last) {
+        <div class="date-wrapper">
+          <mat-chip class="date-label">{{ day.dateLabel }}</mat-chip>
+          @for (message of day.messages; track message; let lastMessage = $last) {
+            <div [class.sent]="message?.senderId === data.me?.id"
+                 [class.received]="message?.senderId !== data.me?.id"
+                 class="message-wrapper">
+              <div *ngIf="message" @messageAnimation [@.disabled]="!(lastDay && lastMessage) || animationsDisabled" class="message-bubble">
+                {{ message.text }}
+              </div>
+              <div class="message-meta">{{ message.created_at | date: 'HH:mm' }}</div>
+            </div>
+          }
 
-  </mat-card-content>
-  <mat-card-content *ngIf="data.form" class="message-form">
-    <form [ngrxFormState]="data.form" (submit)="sendMessage()">
-      <textarea [ngrxFormControlState]="data.form.controls.text" textareaAutosize textAreaSubmit placeholder="Type your message"></textarea>
-      <button mat-raised-button color="primary" type="submit">Send</button>
-    </form>
-  </mat-card-content>
-  <button mat-raised-button #scrollButton class="scroll-to-latest hidden">
-    <mat-icon fontIcon="keyboard_arrow_down"></mat-icon>
-  </button>
+        </div>
+      }
+    </mat-card-content>
+    <mat-card-content class="message-form">
+      <form [ngrxFormState]="data.form" (submit)="sendMessage()">
+        <div class="textarea-wrapper">
+        <textarea [ngrxFormControlState]="data.form.controls.text"
+                  [ngrxEnableFocusTracking]="true"
+                  cdkTextareaAutosize
+                  cdkAutosizeMinRows="1"
+                  cdkAutosizeMaxRows="15"
+                  textAreaSubmit>
+
+        </textarea>
+        </div>
+        <button mat-raised-button color="primary" type="submit">Send</button>
+      </form>
+      <button mat-fab #scrollButton class="scroll-to-latest hidden">
+        <mat-icon fontIcon="keyboard_arrow_down"></mat-icon>
+      </button>
+    </mat-card-content>
+  }
 </div>

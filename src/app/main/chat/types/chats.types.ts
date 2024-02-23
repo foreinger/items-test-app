@@ -1,20 +1,22 @@
-import {User} from "../../users/types/user.types";
-import {BaseProps} from "../../../core/types/base.types";
+import { User } from '../../users/types/user.types';
+import { BaseProps } from '../../../core/types/base.types';
 
 export type Message = {
-  id: number
   text: string;
   senderId: number;
-} & BaseProps
+} & BaseProps;
 
 export type Room = {
-  id: number;
-  members: User[]
-  lastMessage: Message | null
-} & BaseProps
-
+  members: User[];
+  lastMessage: Message | null;
+} & BaseProps;
 
 export type MessageForm = {
   text: string;
-  roomId: number | null;
-}
+  roomId: string | null;
+};
+
+export type MessagesByDate = {
+  dateLabel: string;
+  messages: Message[];
+};

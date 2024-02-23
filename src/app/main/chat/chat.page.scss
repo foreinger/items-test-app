@@ -4,6 +4,7 @@
   gap: 24px;
   margin-top: 48px;
   height: calc(100vh - var(--mat-toolbar-standard-height) - 96px); // full height - toolbar height - double margin
+  padding: 0 16px;
 
   .chat-column {
     box-shadow: 5px 5px 20px #cccccc;
@@ -53,6 +54,14 @@
         right: 8px;
         top: 8px;
       }
+    }
+
+    .empty-list {
+      height: 100px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .active {
